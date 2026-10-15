@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Award, Globe2, CheckCircle } from 'lucide-react';
-import { clientCategories, allClients } from '../data/gksContent';
+import { Award, Globe2, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { clientCategories, allClients, type ClientItem } from '../data/gksContent';
 
 export const ClienteleWall: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [imageErrorMap, setImageErrorMap] = useState<Record<string, boolean>>({});
 
   const filteredClients =
     selectedCategory === 'All'
@@ -31,6 +32,10 @@ export const ClienteleWall: React.FC = () => {
       return (words[0][0] + words[1][0]).toUpperCase();
     }
     return name.slice(0, 2).toUpperCase();
+  };
+
+  const handleImageError = (clientName: string) => {
+    setImageErrorMap((prev) => ({ ...prev, [clientName]: true }));
   };
 
   return (
@@ -87,41 +92,83 @@ export const ClienteleWall: React.FC = () => {
           ))}
         </div>
 
-        {/* 21 Categorized Client Cards Grid */}
+        {/* 21+ Categorized Client Cards Grid with Actual Logos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {filteredClients.map((client, idx) => (
-            <div
-              key={`${client.name}-${idx}`}
-              className="group p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-orange-400 transition-all duration-200 flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  {/* Monogram Badge */}
-                  <div className="w-10 h-10 rounded-xl bg-slate-100 group-hover:bg-orange-50 border border-slate-200 group-hover:border-orange-200 flex items-center justify-center font-bold text-xs font-display text-slate-700 group-hover:text-orange-600 transition-colors">
-                    {getMonogram(client.name)}
+          {filteredClients.map((client: ClientItem, idx: number) => {
+            const hasError = imageErrorMap[client.name];
+            const hasLogo = client.logoUrl && !hasError;
+
+            return (
+              <div
+                key={`${client.name}-${idx}`}
+                className="group p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs hover:shadow-lg hover:border-orange-400 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  {/* Logo Display Canvas */}
+                  <div className="h-24 w-full rounded-xl bg-slate-50/80 group-hover:bg-orange-50/30 border border-slate-100 flex items-center justify-center p-3 mb-4 transition-colors overflow-hidden">
+                    {hasLogo ? (
+                      <img
+                        src={client.logoUrl}
+                        alt={`${client.name} logo`}
+                        onError={() => handleImageError(client.name)}
+                        className="max-h-16 max-w-[160px] w-auto h-auto object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <div className="w-10 h-10 rounded-xl bg-slate-200/80 border border-slate-300 flex items-center justify-center font-bold text-xs font-display text-slate-700 group-hover:bg-orange-100 group-hover:text-orange-700 transition-colors">
+                          {getMonogram(client.name)}
+                        </div>
+                        <div className="text-left">
+                          <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 block">
+                            Enterprise
+                          </span>
+                          <span className="text-xs font-bold text-slate-800">
+                            {client.name.split(' ')[0]}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <span className="text-[10px] font-mono font-medium text-slate-400">
-                    PARTNER
-                  </span>
+
+                  {/* Client Corporate Name */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider">
+                        Client Partner
+                      </span>
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    </div>
+
+                    <h3 className="text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors font-display line-clamp-1">
+                      {client.name}
+                    </h3>
+
+                    {client.subtitle && (
+                      <p className="text-xs text-slate-500 line-clamp-1 font-normal">
+                        {client.subtitle}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
-                <h3 className="text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors font-display line-clamp-2">
-                  {client.name}
-                </h3>
+                {/* Card Footer Tag */}
+                <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-[11px] font-medium text-slate-400 truncate max-w-[180px]">
+                    {client.category.split('&')[0].trim()}
+                  </span>
+                  <div className="flex items-center gap-1 text-[11px] text-emerald-700 font-semibold">
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>Engaged</span>
+                  </div>
+                </div>
               </div>
-
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-[11px] font-medium text-slate-500 truncate max-w-[170px]">
-                  {client.category}
-                </span>
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Global Delivery Note */}
-        <div className="rounded-2xl bg-white border border-slate-200/90 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div className="rounded-2xl bg-white border border-slate-200/90 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 shrink-0">
               <Globe2 className="w-5 h-5" />
@@ -131,7 +178,7 @@ export const ClienteleWall: React.FC = () => {
                 Pan-India &amp; Overseas Delivery Capability
               </p>
               <p className="text-xs text-slate-500">
-                On-site facilitation delivered across key industrial corridors in India and the Middle East.
+                On-site facilitation delivered across key industrial corridors in India, UAE, and Qatar.
               </p>
             </div>
           </div>

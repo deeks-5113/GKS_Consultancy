@@ -104,14 +104,23 @@ export const TrustBar: React.FC = () => {
           <div className="absolute right-0 inset-y-0 w-16 sm:w-24 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none" />
 
           {/* Marquee Track (Repeated twice for seamless loop) */}
-          <div className="animate-marquee flex items-center gap-8 whitespace-nowrap py-2">
+          <div className="animate-marquee flex items-center gap-6 whitespace-nowrap py-2">
             {[...marqueeClients, ...marqueeClients].map((client, idx) => (
               <div
                 key={idx}
-                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-xs sm:text-sm font-semibold text-slate-700 hover:border-orange-400 hover:text-slate-900 transition-all cursor-default"
+                className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-xs sm:text-sm font-semibold text-slate-700 hover:border-orange-400 hover:text-slate-900 transition-all cursor-default"
               >
-                <div className="w-2 h-2 rounded-full bg-slate-300" />
-                <span>{client}</span>
+                {client.logoUrl ? (
+                  <img
+                    src={client.logoUrl}
+                    alt=""
+                    className="h-5 max-w-[80px] w-auto object-contain mix-blend-multiply opacity-90"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-2 h-2 rounded-full bg-orange-500" />
+                )}
+                <span>{client.name}</span>
               </div>
             ))}
           </div>

@@ -55,10 +55,22 @@ export interface MethodologyStep {
   highlight: string;
 }
 
+export interface ClientItem {
+  name: string;
+  category: string;
+  logoUrl?: string;
+  subtitle?: string;
+}
+
 export interface ClientCategory {
   category: string;
   description: string;
-  clients: string[];
+  clients: ClientItem[];
+}
+
+export interface MarqueeClient {
+  name: string;
+  logoUrl?: string;
 }
 
 export interface ContactInfo {
@@ -143,20 +155,24 @@ export const trustBadges = [
   'Customized Competency Blueprints',
 ];
 
-export const marqueeClients = [
-  'Reliance Industries Limited',
-  'ITC Limited',
-  'Coca-Cola',
-  'GlaxoSmithKline (GSK)',
-  'Natco Pharma Limited',
-  'Adani Wilmar',
-  'Aditya Birla UltraTech Cement',
-  'MRF',
-  'Qatar Petroleum',
-  'Amara Raja Batteries',
-  'Hershey’s',
-  'Eisai Lifesciences',
+export const marqueeClients: MarqueeClient[] = [
+  { name: 'Reliance Industries Limited', logoUrl: '/clients/reliance_industries.jpg' },
+  { name: 'ITC Limited', logoUrl: '/clients/ITC_Limited_Logo.svg' },
+  { name: 'Coca-Cola', logoUrl: '/clients/Coca_cola.png' },
+  { name: 'GlaxoSmithKline (GSK)', logoUrl: '/clients/Gsk-logo.webp' },
+  { name: 'Natco Pharma Limited', logoUrl: '/clients/Natco_pharma.png' },
+  { name: 'Adani Wilmar', logoUrl: '/clients/adani_wilmar.png' },
+  { name: 'Aditya Birla UltraTech Cement', logoUrl: '/clients/aditya_birla.png' },
+  { name: 'MRF', logoUrl: '/clients/mrf_logo.png' },
+  { name: 'Qatar Petroleum', logoUrl: '/clients/qatar_petroleum_logo.webp' },
+  { name: 'Amara Raja Group', logoUrl: '/clients/Amara_raja_group.png' },
+  { name: 'Hershey’s', logoUrl: '/clients/hersheys.jpg' },
+  { name: 'Eisai', logoUrl: '/clients/eisai.png' },
+  { name: 'The India Cements Ltd', logoUrl: '/clients/India_Cements_logo.png' },
+  { name: 'Ramco SuperGrade', logoUrl: '/clients/ramco_supergrade.jpg' },
+  { name: 'ETA Star & Ascon', logoUrl: '/clients/eta_star_logo.jpg' },
 ];
+
 
 // ==========================================
 // 4. About & Philosophy
@@ -488,57 +504,174 @@ export const clientCategories: ClientCategory[] = [
     category: 'Pharma & Lifesciences',
     description: 'Global and domestic pharmaceutical giants maintaining rigorous quality and compliance standards.',
     clients: [
-      'Natco Pharma Limited',
-      'GlaxoSmithKline (GSK)',
-      'Eisai',
-      'Suven Life Sciences',
-      'Krebs Biochemicals',
+      {
+        name: 'Natco Pharma Limited',
+        category: 'Pharma & Lifesciences',
+        logoUrl: '/clients/Natco_pharma.png',
+        subtitle: 'Global Oncology & Specialty Pharma',
+      },
+      {
+        name: 'GlaxoSmithKline (GSK)',
+        category: 'Pharma & Lifesciences',
+        logoUrl: '/clients/Gsk-logo.webp',
+        subtitle: 'Global Biopharma Leader',
+      },
+      {
+        name: 'Eisai',
+        category: 'Pharma & Lifesciences',
+        logoUrl: '/clients/eisai.png',
+        subtitle: 'Human Health Care (hhc) Pharma',
+      },
+      {
+        name: 'Suven Life Sciences',
+        category: 'Pharma & Lifesciences',
+        logoUrl: '/clients/suven_life_sciences.jpg',
+        subtitle: 'CNS Drug Discovery & Biopharma',
+      },
+      {
+        name: 'Krebs Biochemicals',
+        category: 'Pharma & Lifesciences',
+        logoUrl: '/clients/krebs.png',
+        subtitle: 'Biochemicals & Fermentation',
+      },
     ],
   },
   {
     category: 'FMCG & Conglomerates',
     description: 'Leading consumer goods powerhouses driving high-velocity operations and customer loyalty.',
     clients: [
-      'ITC Limited',
-      'Coca-Cola',
-      'Adani Wilmar',
-      'Hershey’s',
-      'Nutrine',
-      'Parrys (EID Parry)',
+      {
+        name: 'ITC Limited',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/ITC_Limited_Logo.svg',
+        subtitle: 'Diversified Conglomerate',
+      },
+      {
+        name: 'Coca-Cola',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/Coca_cola.png',
+        subtitle: 'Global Beverage Leader',
+      },
+      {
+        name: 'Adani Wilmar',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/adani_wilmar.png',
+        subtitle: 'Fortune Edible Oils & FMCG',
+      },
+      {
+        name: 'Hershey’s',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/hersheys.jpg',
+        subtitle: 'Confectionery & Food Products',
+      },
+      {
+        name: 'Nutrine',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/nutrine.jpg',
+        subtitle: 'Heritage Confectionery Brand',
+      },
+      {
+        name: 'Parrys (EID Parry)',
+        category: 'FMCG & Conglomerates',
+        logoUrl: '/clients/parrys.png',
+        subtitle: 'Murugappa Group / Bio-Products',
+      },
     ],
   },
   {
     category: 'Industrial, Cement & Manufacturing',
     description: 'Heavy industrial, infrastructure, and manufacturing corporations powering economic infrastructure.',
     clients: [
-      'Reliance Industries Limited',
-      'MRF',
-      'Amara Raja',
-      'Aditya Birla UltraTech Cement',
-      'The India Cements Ltd',
-      'Ramco SuperGrade',
-      'KCP Cement',
-      'International Paper',
-      'Nava Bharat',
+      {
+        name: 'Reliance Industries Limited',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/reliance_industries.jpg',
+        subtitle: 'Energy, Petrochemicals & Materials',
+      },
+      {
+        name: 'MRF',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/mrf_logo.png',
+        subtitle: 'Tire & Rubber Manufacturing',
+      },
+      {
+        name: 'Amara Raja',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/Amara_raja_group.png',
+        subtitle: 'Energy Storage & Industrial Power',
+      },
+      {
+        name: 'Aditya Birla UltraTech Cement',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/aditya_birla.png',
+        subtitle: 'UltraTech Building Solutions',
+      },
+      {
+        name: 'The India Cements Ltd',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/India_Cements_logo.png',
+        subtitle: 'Infrastructure & Cement Manufacturing',
+      },
+      {
+        name: 'Ramco SuperGrade',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/ramco_supergrade.jpg',
+        subtitle: 'The Ramco Cements Limited',
+      },
+      {
+        name: 'KCP Cement',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/kcp_cement.png',
+        subtitle: 'The KCP Group / Heavy Engineering',
+      },
+      {
+        name: 'International Paper',
+        category: 'Industrial, Cement & Manufacturing',
+        logoUrl: '/clients/international_paper.png',
+        subtitle: 'Global Packaging & Pulp',
+      },
+      {
+        name: 'Nava Bharat',
+        category: 'Industrial, Cement & Manufacturing',
+        subtitle: 'Ferro Alloys, Energy & Mining',
+      },
     ],
   },
   {
     category: 'International & Infrastructure',
     description: 'Overseas energy leaders and prominent transnational infrastructure engineering firms.',
     clients: [
-      'Qatar Petroleum',
-      'ETA (No.1 MEP Contractor / ETA Star / ETA Ascon / ETA Logistics)',
+      {
+        name: 'Qatar Petroleum',
+        category: 'International & Infrastructure',
+        logoUrl: '/clients/qatar_petroleum_logo.webp',
+        subtitle: 'QatarEnergy / Oil & Gas Enterprise',
+      },
+      {
+        name: 'ETA Ascon',
+        category: 'International & Infrastructure',
+        logoUrl: '/clients/eta_ascon_logo.jpg',
+        subtitle: 'No.1 MEP Contractor & Engineering',
+      },
+      {
+        name: 'ETA Star',
+        category: 'International & Infrastructure',
+        logoUrl: '/clients/eta_star_logo.jpg',
+        subtitle: 'Property Development & Hospitality',
+      },
+      {
+        name: 'ETA Logistics',
+        category: 'International & Infrastructure',
+        logoUrl: '/clients/eta_logisctics_logo.jpg',
+        subtitle: 'Transnational Cargo & Supply Chain',
+      },
     ],
   },
 ];
 
-// All 21 Clients Flattened for quick stats & marquee
-export const allClients: { name: string; category: string }[] = clientCategories.flatMap((cat) =>
-  cat.clients.map((client) => ({
-    name: client,
-    category: cat.category,
-  }))
-);
+// All Clients Flattened for quick stats & marquee
+export const allClients: ClientItem[] = clientCategories.flatMap((cat) => cat.clients);
+
 
 // ==========================================
 // 9. Contact Details & Official Coordinates
