@@ -121,7 +121,13 @@ export const ContactFooter: React.FC = () => {
             <div className="space-y-4">
               <div className="inline-block p-2 bg-white rounded-xl shadow-xs">
                 <img
-                  src="/assets/gks-logo.jpg"
+                  src="/assets/gks-logo.png"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('gks-logo.jpg')) {
+                      target.src = '/assets/gks-logo.jpg';
+                    }
+                  }}
                   alt="GKS Consultancy"
                   className="h-10 w-auto object-contain mix-blend-multiply"
                 />

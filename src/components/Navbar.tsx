@@ -71,7 +71,13 @@ export const Navbar: React.FC = () => {
             >
               <div className="relative overflow-hidden rounded-lg bg-white p-1">
                 <img
-                  src="/assets/gks-logo.jpg"
+                  src="/assets/gks-logo.png"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('gks-logo.jpg')) {
+                      target.src = '/assets/gks-logo.jpg';
+                    }
+                  }}
                   alt="GKS Consultancy Logo"
                   className="h-10 sm:h-12 w-auto object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
                 />
@@ -167,7 +173,13 @@ export const Navbar: React.FC = () => {
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <img
-                  src="/assets/gks-logo.jpg"
+                  src="/assets/gks-logo.png"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('gks-logo.jpg')) {
+                      target.src = '/assets/gks-logo.jpg';
+                    }
+                  }}
                   alt="GKS Consultancy"
                   className="h-9 w-auto object-contain mix-blend-multiply"
                 />
